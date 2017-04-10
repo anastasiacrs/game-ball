@@ -26,7 +26,7 @@ const opt1 = {
         min: 40,
         max: 60
       },
-      thickness: 0,
+      thickness: 0.1,
       strokeColor: '#444',
       level: .45,
       curved: true,
@@ -44,7 +44,7 @@ const opt1 = {
         min: 40,
         max: 60
       },
-      thickness: 0,
+      thickness: 0.1,
       strokeColor: '#444',
       level: .55,
       curved: true,

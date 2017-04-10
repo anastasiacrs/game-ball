@@ -25,6 +25,8 @@ class Wave {
   }
 
   renderShape(ctx) {
+    ctx.lineWidth = this.opt.thickness;
+    ctx.strokeStyle = this.opt.strokeColor;
     ctx.beginPath();
     var pointCount = this.points.length;
     ctx.moveTo(this.points[0].x, this.points[0].y);
