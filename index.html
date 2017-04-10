@@ -3,122 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Game Ball</title>
-    <script src="keyboard.js"></script>
-    <script src="vector.js"></script>
-    <script src="ball.js"></script>
-    <script src="player.js"></script>
-    <script src="net.js"></script>
-    <script src="point.js"></script>
-    <script src="wave.js"></script>
-    <script src="wave_config.js"></script>
-    <script src="constants.js"></script>
-
+    <script src="index.js" async></script>
+    <link rel="stylesheet" type="text/css" href="index.css" />
 </head>
 <body>
 
-<style>
-    canvas {
-        border: 1px solid black;
-    }
-</style>
-
-<canvas id="can" ></canvas>
-
-<script>
-    let canvas = document.getElementById("can");
-
-    canvas.width = V_BORDER;
-    canvas.height = H_BORDER;
-
-    let context = canvas.getContext("2d");
-
-    let ball = new Ball(50, 200, BALL_RADIUS, new Vector(20, 0));
-    let player1 = new Player(50, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'q', 'e', 'w', 0, 500, PLAYER_COLOR_1, 'left');
-    let player2 = new Player(960, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'left', 'right', 'up', 510, 1010, PLAYER_COLOR_2, 'right');
-
-    canvas.players=[player1,player2];
-
-    let net = new Net(505, 100, 10, NET_COLOR);
-
-    let waves=[new Wave(context, opt3),new Wave(context, opt2),new Wave(context, opt1)];
-
-    // let controls1=new Controls(player1);
-    // let controls2=new Controls(player2);
-
-
-    function animate(){
-        requestAnimationFrame(function() {
-            animate();
-        });
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
-        drawWaves(context);
-        drawFloor(context);
-
-        // if(player1.drawCtrls){
-        //         controls1.draw(context);
-        //     }
-        // if(player2.drawCtrls){
-        //     controls2.draw(context);
-        // }
-
-        if (ball.collides(player1)) {
-            ball.ballBounce(player1);
-        }
-
-        if (ball.collides(player2)) {
-            ball.ballBounce(player2);
-        }
-
-        ball.move();
-        player1.move();
-        player2.move();
-
-        ball.draw(context);
-        player1.draw(context);
-        player2.draw(context);
-
-        net.draw(context);
-    }
-
-    function drawFloor(context){
-
-          context.beginPath();
-          context.moveTo(0,H_BORDER);
-          context.lineTo(0,H_BORDER-FLOOR_HEIGHT);
-        context.lineTo(V_BORDER,H_BORDER-FLOOR_HEIGHT);
-        context.lineTo(V_BORDER,H_BORDER);
-        context.fillStyle = '#7FE398';
-        context.fill();
-
-    }
-
-    function drawWaves(context){
-        for(let i=0;i<waves.length; i++){
-            waves[i].updatePoints();
-            waves[i].renderShape(context);
-        }
-    }
-
-    animate();
-
-//var event = new CustomEvent("win", {'detail': {'winner':'left'}});
-//canvas.dispatchEvent(event);
-    canvas.addEventListener('win', function(e) {
-        e.winner//'left';'right';
-        for(let i=0;i<canvas.players.length;i++){
-            console.log(e);
-            console.log(e.detail.winner);
-
-            if(e.detail.winner==canvas.players[i].side){
-                canvas.players[i].win();
-            }
-        }
-     }, false);
-
-
-</script>
-
+<div id='landing_container'>
+<div id='landing_btns_container'>
+    <input type="button" value="START" id='start'></div>
+</div>
+</div>
 
 </body>
 </html>
