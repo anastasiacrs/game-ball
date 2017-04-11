@@ -1,0 +1,62 @@
+#main_container{
+	background-image: url(../img/beach4.jpg);
+	background-size: 1010px 500px;
+	background-color: #89E7EF;
+	width: 1010px;
+	height: 500px;
+	/*===========================================================================*/
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	/*===========================================================================*/ 
+	text-align: center;
+}
+#main_btns_container{
+	display: block;
+	text-align: center;
+
+	  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%
+
+
+}
+#main_btns_container>*{
+	display: inline-block;
+}
+#main_btns_container>input[type='button']{
+	font-size: 64px;
+	padding: 5px 20px;
+	background-color: white;
+	border-radius: 20px;
+}
+
+#gameover{
+	font-size: 64px;
+	font-weight: 600;
+	font-family: 'GameOver';
+	text-align: center;
+display: inline-block;
+margin: 50px 0;
+
+ -webkit-animation: neon 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon 1.5s ease-in-out infinite alternate;
+  animation: neon 1.5s ease-in-out infinite alternate;
+}
+
+@font-face {
+  font-family: 'GameOver';
+  src: url('../font/GameOver.ttf'); /* Safari, Android, iOS */
+}
+
+
+@-webkit-keyframes neon {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #FF1177;
+  }
+}
