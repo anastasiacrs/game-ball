@@ -13,7 +13,9 @@ class Player {
         this.xRight=xRight;
 
         this.color=color;
-
+        
+        this.vx = 0;
+        this.vy = 0;
         this.v = 0;
         this.y0 = y;
         this.t0 = 0;
@@ -123,24 +125,26 @@ class Player {
 
     jump() {
         this.hideCtrls();
-        if (this.v != 0) return;
+        if (this.vy != 0) return;
 
         this.t0 = Date.now();
 
-        this.v = PLAYER_JUMP_VELOCITY;
+        this.vy = PLAYER_JUMP_VELOCITY
     }
 
     move() {
-        if (this.v == 0) return;
-
         let t = (Date.now() - this.t0) / TIME_SCALE;
 
-        this.y = this.y0 - (this.v * t - 0.5 * G * Math.pow(t, 2));
+        this.x += this.vx;
+        this.y = this.y0 - (this.vy > 0 ? (this.vy * t - 0.5 * G * Math.pow(t, 2)) : 0);
 
-        if (this.y > this.y0) {
-            this.v = 0;
+        if (this.x - this.r < this.xLeft) this.x = this.xLeft + this.r;
+        if (this.x + this.r > this.xRight) this.x = this.xRight - this.r;
+
+        if (this.y >= this.y0) {
+            this.vy = 0;
+            this.y = this.y0;
         }
-
     }
 
     left() {
@@ -155,10 +159,26 @@ class Player {
         this.x += PLAYER_STEP;
     }
 
+    leftPressed() {
+        this.vx = -PLAYER_H_VELOCITY;
+    }
+
+    rightPressed() {
+        this.vx = PLAYER_H_VELOCITY;
+    }
+
+    released() {
+        this.vx = 0;
+    }
+
 
     bindKeys() {
-        keyboardJS.bind(this.ctrl.left, this.left.bind(this));
-        keyboardJS.bind(this.ctrl.right, this.right.bind(this));
+        // keyboardJS.bind(this.ctrl.left, this.left.bind(this));
+        // keyboardJS.bind(this.ctrl.right, this.right.bind(this));
+
+        keyboardJS.bind(this.ctrl.left, this.leftPressed.bind(this), this.released.bind(this));
+        keyboardJS.bind(this.ctrl.right, this.rightPressed.bind(this), this.released.bind(this));
+
         keyboardJS.bind(this.ctrl.up, this.jump.bind(this));
     }
 

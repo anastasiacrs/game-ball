@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Game Ball</title>
-    <script src="keyboard.js"></script>
-    <script src="vector.js"></script>
-    <script src="ball.js"></script>
-    <script src="player.js"></script>
-    <script src="net.js"></script>
-    <script src="point.js"></script>
-    <script src="wave.js"></script>
-    <script src="wave_config.js"></script>
-    <script src="constants.js"></script>
+    <script src="js/control/keyboard.js"></script>
+    <script src="js/component/vector.js"></script>
+    <script src="js/component/ball.js"></script>
+    <script src="js/component/player.js"></script>
+    <script src="js/component/net.js"></script>
+    <script src="js/point.js"></script>
+    <script src="js/background/wave.js"></script>
+    <script src="js/background/wave_config.js"></script>
+    <script src="js/constants.js"></script>
 
 </head>
 <body>
@@ -38,13 +38,13 @@
 
     let context = canvas.getContext("2d");
 
-    let ball = new Ball(50, 200, BALL_RADIUS, new Vector(20, 0));
-    let player1 = new Player(50, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'q', 'e', 'w', 0, 500, PLAYER_COLOR_1, 'left');
-    let player2 = new Player(960, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'left', 'right', 'up', 510, 1010, PLAYER_COLOR_2, 'right');
+    let ball = new Ball(BALL_START_X, BALL_START_Y, BALL_RADIUS, new Vector(BALL_START_V, 0));
+    let player1 = new Player(PLAYER_START_H_DELTA, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'q', 'e', 'w', 0, 500, PLAYER_COLOR_1, 'left');
+    let player2 = new Player(V_BORDER - PLAYER_START_H_DELTA, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'left', 'right', 'up', 510, 1010, PLAYER_COLOR_2, 'right');
 
     canvas.players=[player1,player2];
 
-    let net = new Net(505, 100, 10, NET_COLOR);
+    let net = new Net(NET_X, NET_HEIGHT, NET_WIDTH, NET_COLOR);
 
     let waves=[new Wave(context, opt3),new Wave(context, opt2),new Wave(context, opt1)];
 
@@ -68,12 +68,17 @@
         //     controls2.draw(context);
         // }
 
-        if (ball.collides(player1)) {
-            ball.ballBounce(player1);
+        if (ball.collidesWithPlayer(player1)) {
+            ball.playerBounce(player1);
         }
 
-        if (ball.collides(player2)) {
-            ball.ballBounce(player2);
+        if (ball.collidesWithPlayer(player2)) {
+            ball.playerBounce(player2);
+        }
+
+        let side;
+        if (side = ball.collidesWithNet(net)) {
+            ball.netBounce(net, side);
         }
 
         ball.move();
