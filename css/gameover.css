@@ -1,3 +1,6 @@
+*{
+    font-family: 'Inconsolata', sans-serif;
+}
 #main_container{
 	background-image: url(../img/beach4.jpg);
 	background-size: 1010px 500px;
@@ -33,17 +36,32 @@
 	border-radius: 20px;
 }
 
+.main_container_up_title{
+    	text-align: center;
+display: block;
+margin: 50px 0;
+}
 #gameover{
 	font-size: 64px;
 	font-weight: 600;
-	font-family: 'GameOver';
-	text-align: center;
-display: inline-block;
-margin: 50px 0;
+	font-family:'GameOver', 'Press Start 2P';
+
 
  -webkit-animation: neon 1.5s ease-in-out infinite alternate;
   -moz-animation: neon 1.5s ease-in-out infinite alternate;
   animation: neon 1.5s ease-in-out infinite alternate;
+}
+
+#winner{
+    font-size: 48px;
+    position: absolute;
+    bottom: 0px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 50px;
+    font-family: 'Press Start 2P';
+
 }
 
 @font-face {

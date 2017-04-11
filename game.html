@@ -12,11 +12,18 @@
     <script src="js/background/wave.js"></script>
     <script src="js/background/wave_config.js"></script>
     <script src="js/constants.js"></script>
+    
+    
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 
 </head>
 <body>
 
 <style>
+    *{
+    font-family: 'Inconsolata', sans-serif;
+}
     canvas {
         border: 1px solid black;
         /*===========================================================================*/
@@ -113,18 +120,20 @@
 
     animate();
 
-//var event = new CustomEvent("win", {'detail': {'winner':'left'}});
-//canvas.dispatchEvent(event);
     canvas.addEventListener('win', function(e) {
-        e.winner//'left';'right';
         for(let i=0;i<canvas.players.length;i++){
-            console.log(e);
-            console.log(e.detail.winner);
-
+//            console.log(e.detail.winner);
             if(e.detail.winner==canvas.players[i].side){
                 canvas.players[i].win();
+                ball.restart(e.detail.winner);
+                
             }
         }
+     }, false);
+
+    canvas.addEventListener('gameover', function(e) {
+       console.log('gameover '+e.detail.winner);
+        window.location.href = `gameover.html?winner=${e.detail.winner}`;
      }, false);
 
 

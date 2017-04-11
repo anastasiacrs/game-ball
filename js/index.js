@@ -7,7 +7,6 @@ document.onkeydown = function(e) {
 	return true;
 }
 document.getElementById('start').onclick = function(e) {
-	console.log('!!!!');
 	window.location.href = "game.html";
 	document.onkeydown = undefined;
 }

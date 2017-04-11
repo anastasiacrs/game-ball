@@ -51,9 +51,14 @@ class Ball {
     }
 
     horizontalWallBounce(angle) {
+        console.log('horizontalWallBounce '+this.x0);
         if (Math.sin(angle) < 0) {
             this.moving = false;
             // Ground touch, propagate event here
+            var winner=this.x0<V_BORDER/2?'left':'right';
+            var event = new CustomEvent("win", {'detail': {'winner':winner}});
+            let canvas = document.getElementById("can");
+            canvas.dispatchEvent(event);
         }
 
         this.velocity.v = this.currentVelocity();

@@ -41,6 +41,11 @@ class Player {
     win(){
         console.log('win');
         this.score++;
+        if(this.score>=WIN_SCORE){
+            //todo: canvas
+            var event = new CustomEvent("gameover", {'detail': {'winner':this.side}});
+            canvas.dispatchEvent(event);
+        }
     }
 
     hideCtrls(){
