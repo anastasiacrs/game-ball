@@ -12,6 +12,12 @@ class Ball {
         this.y0 = y;
     }
 
+    restart(side) {
+        this.x = side == 'left' ? BALL_START_X : V_BORDER - BALL_START_X;
+        this.y = BALL_START_Y;
+        this.velocity = new Vector(BALL_START_V, 0);
+    }
+
     draw(context) {
         Ball.circle(context, this.x, this.y, this.r);
     }
@@ -45,6 +51,11 @@ class Ball {
     }
 
     horizontalWallBounce(angle) {
+        if (Math.sin(angle) < 0) {
+            this.moving = false;
+            // Ground touch, propagate event here
+        }
+
         this.velocity.v = this.currentVelocity();
         this.velocity.a = 2 * Math.PI - angle;
         this.t0 = Date.now();
