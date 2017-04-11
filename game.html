@@ -38,9 +38,9 @@
 
     let context = canvas.getContext("2d");
 
-    let ball = new Ball(50, 200, BALL_RADIUS, new Vector(20, 0));
-    let player1 = new Player(50, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'q', 'e', 'w', 0, 500, PLAYER_COLOR_1, 'left');
-    let player2 = new Player(960, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'left', 'right', 'up', 510, 1010, PLAYER_COLOR_2, 'right');
+    let ball = new Ball(BALL_START_X, BALL_START_Y, BALL_RADIUS, new Vector(BALL_START_V, 0));
+    let player1 = new Player(PLAYER_START_H_DELTA, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'q', 'e', 'w', 0, 500, PLAYER_COLOR_1, 'left');
+    let player2 = new Player(V_BORDER - PLAYER_START_H_DELTA, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'left', 'right', 'up', 510, 1010, PLAYER_COLOR_2, 'right');
 
     canvas.players=[player1,player2];
 

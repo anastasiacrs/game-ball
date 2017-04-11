@@ -1,10 +1,11 @@
 class Ball {
 
-    constructor(x, y, r, velocity) {
+    constructor(x, y, r, velocity, moving) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.velocity = velocity;
+        this.moving = moving;
 
         this.t0 = Date.now();
         this.x0 = x;
@@ -94,6 +95,17 @@ class Ball {
     }
 
     bounce(angle) {
+        if (!this.moving) {
+            this.t0 = Date.now();
+            this.x0 = this.x;
+            this.y0 = this.y;
+
+            this.velocity.a = angle + Math.PI / 2;
+            console.log(`a=${ (angle + Math.PI / 2) * 180 / Math.PI}, new=${2 * Math.PI - this.currentAngle() + 2 * Math.atan(angle)}`)
+
+            this.moving = true;
+        }
+
         this.velocity.v = this.currentVelocity();
         this.velocity.a = 2 * Math.PI - this.currentAngle() + 2 * Math.atan(angle);
 
@@ -143,6 +155,9 @@ class Ball {
     }
 
     move() {
+        if (!this.moving) 
+            return;
+        
         let v0 = this.velocity.v;
         let alpha = this.velocity.a;
 
