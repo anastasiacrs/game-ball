@@ -138,6 +138,9 @@ class Player {
         this.x += this.vx;
         this.y = this.y0 - (this.vy > 0 ? (this.vy * t - 0.5 * G * Math.pow(t, 2)) : 0);
 
+        if (this.x - this.r < this.xLeft) this.x = this.xLeft + this.r;
+        if (this.x + this.r > this.xRight) this.x = this.xRight - this.r;
+
         if (this.y >= this.y0) {
             this.vy = 0;
             this.y = this.y0;
