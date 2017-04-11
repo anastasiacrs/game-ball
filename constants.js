@@ -9,11 +9,16 @@ const V_BORDER = 1010;
 const H_BORDER = 500;
 
 const PLAYER_STEP = 20;
+const PLAYER_H_VELOCITY = 5;
 const PLAYER_JUMP_VELOCITY = 50;
 const PLAYER_RADIUS = 50;
 const PLAYER_COLOR_1 = '#F04B00';
 const PLAYER_COLOR_2 = '#0096FF';
 
+const NET_X = 505;
+const NET_HEIGHT = 100;
+const NET_WIDTH = 10;
+const NET_RADIUS = NET_WIDTH / 2;
 const NET_COLOR = '#F0D282';
 
 const BALL_RADIUS = 20;

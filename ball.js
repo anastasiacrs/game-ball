@@ -43,12 +43,41 @@ class Ball {
         return angle;
     }
 
-    horizontalWallBounce() {
-        this.bounce(0);
+    horizontalWallBounce(angle) {
+        this.velocity.v = this.currentVelocity();
+        this.velocity.a = 2 * Math.PI - angle;
+        this.t0 = Date.now();
+        this.x0 = this.x;
+        this.y0 = this.y;
     }
 
-    verticalWallBounce() {
-        this.bounce(Math.tan(Math.PI / 2));
+    verticalWallBounce(angle) {
+        this.velocity.v = this.currentVelocity();
+        this.velocity.a = Math.PI - angle;
+        this.t0 = Date.now();
+        this.x0 = this.x;
+        this.y0 = this.y;
+    }
+
+    playerBounce(player) {
+        if (this.y <= player.y) {
+            this.ballBounce(player);
+        } else {
+            let deltaR = this.r - (this.y - player.y) + BALL_COLLISION_DELTA;
+            this.y += deltaR;
+
+            this.bounce(0);
+        }
+    }
+
+    netBounce(net, side) {
+        if (side == 'left' || side == 'right') {
+            this.x = this.x < net.x ? net.x - net.width / 2 - this.r : net.x + net.width / 2 + this.r;
+
+            this.verticalWallBounce(ball.currentAngle());
+        } else if (side == 'top') {
+            this.ballBounce(net.top);
+        }
     }
 
     ballBounce(ball) {
@@ -71,6 +100,36 @@ class Ball {
         this.t0 = Date.now();
         this.x0 = this.x;
         this.y0 = this.y;
+    }
+
+    collidesWithPlayer(player) {
+        if (this.y <= player.y) {
+            return this.collides(player);
+        }
+
+        return (this.x > player.x - player.r && this.x < player.x + player.r) && (this.y - player.y < this.r);
+    }
+
+    collidesWithNet(net) {
+        let direction = Math.sign(Math.cos(this.currentAngle()));
+        let horizontalDistance = (H_BORDER - NET_HEIGHT - NET_RADIUS) - (this.y + this.r);
+
+        let up = H_BORDER - NET_HEIGHT;
+
+        if (horizontalDistance > 0)
+            return;
+
+        if (this.y > up) {
+            if (this.x < NET_X && direction > 0 && this.x + this.r > net.left) {
+                return 'left';
+            } else if (this.x > NET_X && direction < 0 && this.x - this.r < net.right) {
+                return 'right';
+            }
+        } else if (this.collides(net.top)) {
+            return 'top';
+        }
+
+        return false;
     }
 
     collides(another) {
@@ -100,20 +159,12 @@ class Ball {
         if ((this.x + this.r >= V_BORDER && Math.cos(alpha) > 0)
             || (this.x - this.r <= 0 && Math.cos(alpha) < 0)) {
 
-            this.velocity.v = this.currentVelocity();
-            this.velocity.a = Math.PI - angle;
-            this.t0 = Date.now();
-            this.x0 = this.x;
-            this.y0 = this.y;
+            this.verticalWallBounce(angle);
 
         } else if ((this.y - this.r <= 0 && V_DIRECTION * Math.sin(angle) < 0) || (
-            this.y + this.r >= H_BORDER && V_DIRECTION * Math.sin(angle) > 0)) {
+            this.y + this.r >= H_BORDER - FLOOR_HEIGHT && V_DIRECTION * Math.sin(angle) > 0)) {
 
-            this.velocity.v = this.currentVelocity();
-            this.velocity.a = 2 * Math.PI - angle;
-            this.t0 = Date.now();
-            this.x0 = this.x;
-            this.y0 = this.y;
+            this.horizontalWallBounce(angle)
         }
     }
 }
