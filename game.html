@@ -30,9 +30,10 @@
 <canvas id="can" class='main_container'></canvas>
 
 <script>
-    let canvas = document.getElementById("can");
+    const canvas = document.getElementById("can");
 
-    canvas.width = V_BORDER;
+    (function(){
+         canvas.width = V_BORDER;
     canvas.height = H_BORDER;
 
     let context = canvas.getContext("2d");
@@ -118,6 +119,9 @@
     canvas.addEventListener('gameover', function(e) {
         window.location.href = `gameover.html?winner=${e.detail.winner}`;
      }, false);
+    })();
+
+   
 
 
 
