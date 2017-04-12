@@ -31,4 +31,4 @@ const BALL_COLOR='#FFC814';
 
 const FLOOR_HEIGHT=20;
 
-const WIN_SCORE=1;
+const WIN_SCORE=5;
