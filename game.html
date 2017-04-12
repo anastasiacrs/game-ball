@@ -12,8 +12,9 @@
     <script src="js/background/wave.js"></script>
     <script src="js/background/wave_config.js"></script>
     <script src="js/constants.js"></script>
-    
-    
+
+    <link rel="stylesheet" type="text/css" href="css/general.css"/>
+
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 
@@ -21,21 +22,12 @@
 <body>
 
 <style>
-    *{
-    font-family: 'Inconsolata', sans-serif;
-}
     canvas {
         border: 1px solid black;
-        /*===========================================================================*/
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-50%);
-        /*===========================================================================*/
     }
 </style>
 
-<canvas id="can" ></canvas>
+<canvas id="can" class='main_container'></canvas>
 
 <script>
     let canvas = document.getElementById("can");
@@ -135,6 +127,8 @@
        console.log('gameover '+e.detail.winner);
         window.location.href = `gameover.html?winner=${e.detail.winner}`;
      }, false);
+
+
 
 
 </script>
