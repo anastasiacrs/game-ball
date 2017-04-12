@@ -30,27 +30,25 @@
 <canvas id="can" class='main_container'></canvas>
 
 <script>
-    const canvas = document.getElementById("can");
+    
 
     (function(){
-         canvas.width = V_BORDER;
-    canvas.height = H_BORDER;
+ const CANVAS = document.getElementById("can");
 
-    let context = canvas.getContext("2d");
+         CANVAS.width = V_BORDER;
+        CANVAS.height = H_BORDER;
 
-    let ball = new Ball(BALL_START_X, BALL_START_Y, BALL_RADIUS, new Vector(BALL_START_V, 0));
-    let player1 = new Player(PLAYER_START_H_DELTA, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'a', 'd', 'w', 0, 500, PLAYER_COLOR_1, 'left');
-    let player2 = new Player(V_BORDER - PLAYER_START_H_DELTA, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'left', 'right', 'up', 510, 1010, PLAYER_COLOR_2, 'right');
+    let context = CANVAS.getContext("2d");
 
-    canvas.players=[player1,player2];
+    let ball = new Ball(context, BALL_START_X, BALL_START_Y, BALL_RADIUS, new Vector(BALL_START_V, 0));
+    let player1 = new Player(context, PLAYER_START_H_DELTA, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'a', 'd', 'w', 0, 500, PLAYER_COLOR_1, 'left');
+    let player2 = new Player(context, V_BORDER - PLAYER_START_H_DELTA, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'left', 'right', 'up', 510, 1010, PLAYER_COLOR_2, 'right');
 
-    let net = new Net(NET_X, NET_HEIGHT, NET_WIDTH, NET_COLOR);
+    CANVAS.players=[player1,player2];
+
+    let net = new Net(context, NET_X, NET_HEIGHT, NET_WIDTH, NET_COLOR);
 
     let waves=[new Wave(context, opt3),new Wave(context, opt2),new Wave(context, opt1)];
-
-    // let controls1=new Controls(player1);
-    // let controls2=new Controls(player2);
-
 
     function animate(){
         requestAnimationFrame(function() {
@@ -106,17 +104,17 @@
 
     animate();
 
-    canvas.addEventListener('win', function(e) {
-        for(let i=0;i<canvas.players.length;i++){
-            if(e.detail.winner==canvas.players[i].side){
-                canvas.players[i].win();
+    CANVAS.addEventListener('win', function(e) {
+        for(let i=0;i<CANVAS.players.length;i++){
+            if(e.detail.winner==CANVAS.players[i].side){
+                CANVAS.players[i].win();
                 ball.restart(e.detail.winner);
                 
             }
         }
      }, false);
 
-    canvas.addEventListener('gameover', function(e) {
+    CANVAS.addEventListener('gameover', function(e) {
         window.location.href = `gameover.html?winner=${e.detail.winner}`;
      }, false);
     })();

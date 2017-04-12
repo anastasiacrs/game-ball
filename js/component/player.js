@@ -1,6 +1,8 @@
 class Player {
 
-    constructor(x, y, r, _left, _right, _up, xLeft, xRight, color, side) {
+    constructor(context, x, y, r, _left, _right, _up, xLeft, xRight, color, side) {
+
+        this.ctx=context;
         this.x = x;
         this.y = y;
         this.r = r;
@@ -38,9 +40,8 @@ class Player {
         console.log('win');
         this.score++;
         if(this.score>=WIN_SCORE){
-            //todo: canvas
             var event = new CustomEvent("gameover", {'detail': {'winner':this.side}});
-            canvas.dispatchEvent(event);
+            this.ctx.canvas.dispatchEvent(event);
         }
     }
 
@@ -48,79 +49,79 @@ class Player {
         this.isCtrls=false;
     }
 
-    draw(context) {
-        context.beginPath();
-        context.arc(this.x, this.y, this.r, Math.PI, 0, false);
-        context.fillStyle = this.color;
-        context.fill();
+    draw() {
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.r, Math.PI, 0, false);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fill();
         //eye
-        context.beginPath();
+        this.ctx.beginPath();
         let sign=this.side=='left'?-1:1;
-        context.arc(this.x-sign*(this.r/2-3), this.y-this.r/2+3, this.r/3, 0, 2 * Math.PI, false);
-        context.fillStyle = 'white';
-        context.fill();
-        context.beginPath();
-        context.arc(this.x-sign*(this.r/2), this.y-this.r/2, this.r/8, 0, 2 * Math.PI, false);
-        context.fillStyle = 'black';
-        context.fill();
+        this.ctx.arc(this.x-sign*(this.r/2-3), this.y-this.r/2+3, this.r/3, 0, 2 * Math.PI, false);
+        this.ctx.fillStyle = 'white';
+        this.ctx.fill();
+        this.ctx.beginPath();
+        this.ctx.arc(this.x-sign*(this.r/2), this.y-this.r/2, this.r/8, 0, 2 * Math.PI, false);
+        this.ctx.fillStyle = 'black';
+        this.ctx.fill();
 
-        this.drawScore(context);
+        this.drawScore();
         if(this.isCtrls){
-            this.drawCtrls(context);
+            this.drawCtrls();
         }
     }
 
-    drawScore(ctx){
-        ctx.beginPath();
-        ctx.font = '128px serif';
-        ctx.fillStyle = this.color;
-        ctx.textAlign = "center";
+    drawScore(){
+        this.ctx.beginPath();
+        this.ctx.font = '128px serif';
+        this.ctx.fillStyle = this.color;
+        this.ctx.textAlign = "center";
         let x = this.side=='left'?0:V_BORDER;
-        ctx.fillText(this.score, x+this.sign*100,150);
+        this.ctx.fillText(this.score, x+this.sign*100,150);
     }
 
-    drawCtrls(ctx) {
+    drawCtrls() {
         //505 => ?? 50 10 50 10 50 ??
         //w=50, gap=10
         //167.5=(V_BORDER/2-w*3-gap*2)/2
-        ctx.font = '24px serif';
-        ctx.textAlign = "center";
+        this.ctx.font = '24px serif';
+        this.ctx.textAlign = "center";
 
 
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = this.color;
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeStyle = this.color;
 
         let x = this.side=='left'?0:V_BORDER;
 
-        ctx.beginPath();
-        ctx.moveTo(x+this.sign*167.5,H_BORDER-150);
-        ctx.lineTo(x+this.sign*(167.5+50), H_BORDER-150);
-        ctx.lineTo(x+this.sign*(167.5+50), H_BORDER-(150+50));
-        ctx.lineTo(x+this.sign*167.5, H_BORDER-(150+50));
-        ctx.closePath();
-        ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(x+this.sign*167.5,H_BORDER-150);
+        this.ctx.lineTo(x+this.sign*(167.5+50), H_BORDER-150);
+        this.ctx.lineTo(x+this.sign*(167.5+50), H_BORDER-(150+50));
+        this.ctx.lineTo(x+this.sign*167.5, H_BORDER-(150+50));
+        this.ctx.closePath();
+        this.ctx.stroke();
 
-        ctx.strokeText(this.ctrl.left, x+this.sign*(167.5+50/2), H_BORDER-(150+50/2-24/4));
+        this.ctx.strokeText(this.ctrl.left, x+this.sign*(167.5+50/2), H_BORDER-(150+50/2-24/4));
 
-        ctx.beginPath();
-        ctx.moveTo(x+this.sign*(167.5+120),H_BORDER-150);
-        ctx.lineTo(x+this.sign*(167.5+50+120), H_BORDER-150);
-        ctx.lineTo(x+this.sign*(167.5+50+120), H_BORDER-(150+50));
-        ctx.lineTo(x+this.sign*(167.5+120), H_BORDER-(150+50));
-        ctx.closePath();
-        ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(x+this.sign*(167.5+120),H_BORDER-150);
+        this.ctx.lineTo(x+this.sign*(167.5+50+120), H_BORDER-150);
+        this.ctx.lineTo(x+this.sign*(167.5+50+120), H_BORDER-(150+50));
+        this.ctx.lineTo(x+this.sign*(167.5+120), H_BORDER-(150+50));
+        this.ctx.closePath();
+        this.ctx.stroke();
 
-        ctx.strokeText(this.ctrl.right, x+this.sign*(167.5+120+50/2), H_BORDER-(150+50/2-24/4));
+        this.ctx.strokeText(this.ctrl.right, x+this.sign*(167.5+120+50/2), H_BORDER-(150+50/2-24/4));
 
-        ctx.beginPath();
-        ctx.moveTo(x+this.sign*(167.5+60),H_BORDER-(150+60));
-        ctx.lineTo(x+this.sign*(167.5+50+60), H_BORDER-(150+60));
-        ctx.lineTo(x+this.sign*(167.5+50+60), H_BORDER-(150+60+50));
-        ctx.lineTo(x+this.sign*(167.5+60), H_BORDER-(150+60+50));
-        ctx.closePath();
-        ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(x+this.sign*(167.5+60),H_BORDER-(150+60));
+        this.ctx.lineTo(x+this.sign*(167.5+50+60), H_BORDER-(150+60));
+        this.ctx.lineTo(x+this.sign*(167.5+50+60), H_BORDER-(150+60+50));
+        this.ctx.lineTo(x+this.sign*(167.5+60), H_BORDER-(150+60+50));
+        this.ctx.closePath();
+        this.ctx.stroke();
 
-        ctx.strokeText(this.ctrl.up, x+this.sign*(167.5+60+50/2), H_BORDER-(150+60+50/2-24/4));
+        this.ctx.strokeText(this.ctrl.up, x+this.sign*(167.5+60+50/2), H_BORDER-(150+60+50/2-24/4));
     }
 
 

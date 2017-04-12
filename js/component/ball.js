@@ -1,6 +1,7 @@
 class Ball {
 
-    constructor(x, y, r, velocity, moving) {
+    constructor(context, x, y, r, velocity, moving) {
+        this.ctx=context;
         this.x = x;
         this.y = y;
         this.r = r;
@@ -18,8 +19,9 @@ class Ball {
         this.velocity = new Vector(BALL_START_V, 0);
     }
 
-    draw(context) {
-        Ball.circle(context, this.x, this.y, this.r);
+    draw() {
+        //todo: static??
+        Ball.circle(this.ctx, this.x, this.y, this.r);
     }
 
     static circle(context, x, y, r) {
@@ -54,11 +56,9 @@ class Ball {
         console.log('horizontalWallBounce '+this.x);
         if (Math.sin(angle) < 0) {
             this.moving = false;
-            // Ground touch, propagate event here
             var winner = this.x < V_BORDER / 2 ? 'right':'left';
             var event = new CustomEvent("win", {'detail': {'winner':winner}});
-            let canvas = document.getElementById("can");
-            canvas.dispatchEvent(event);
+            this.ctx.canvas.dispatchEvent(event);
         }
 
         this.velocity.v = this.currentVelocity();
