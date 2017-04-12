@@ -38,7 +38,7 @@
     let context = canvas.getContext("2d");
 
     let ball = new Ball(BALL_START_X, BALL_START_Y, BALL_RADIUS, new Vector(BALL_START_V, 0));
-    let player1 = new Player(PLAYER_START_H_DELTA, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'q', 'e', 'w', 0, 500, PLAYER_COLOR_1, 'left');
+    let player1 = new Player(PLAYER_START_H_DELTA, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'a', 'd', 'w', 0, 500, PLAYER_COLOR_1, 'left');
     let player2 = new Player(V_BORDER - PLAYER_START_H_DELTA, H_BORDER-FLOOR_HEIGHT, PLAYER_RADIUS,'left', 'right', 'up', 510, 1010, PLAYER_COLOR_2, 'right');
 
     canvas.players=[player1,player2];
@@ -59,13 +59,6 @@
 
         drawWaves(context);
         drawFloor(context);
-
-        // if(player1.drawCtrls){
-        //         controls1.draw(context);
-        //     }
-        // if(player2.drawCtrls){
-        //     controls2.draw(context);
-        // }
 
         if (ball.collidesWithPlayer(player1)) {
             ball.playerBounce(player1);
@@ -114,7 +107,6 @@
 
     canvas.addEventListener('win', function(e) {
         for(let i=0;i<canvas.players.length;i++){
-//            console.log(e.detail.winner);
             if(e.detail.winner==canvas.players[i].side){
                 canvas.players[i].win();
                 ball.restart(e.detail.winner);
@@ -124,7 +116,6 @@
      }, false);
 
     canvas.addEventListener('gameover', function(e) {
-       console.log('gameover '+e.detail.winner);
         window.location.href = `gameover.html?winner=${e.detail.winner}`;
      }, false);
 
