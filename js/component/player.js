@@ -1,9 +1,5 @@
 class Player {
 
-    //include controls.js
-
-//pl1: xLeft:0, xRight:500
-//pl1: xLeft:510, xRight:1010
     constructor(x, y, r, _left, _right, _up, xLeft, xRight, color, side) {
         this.x = x;
         this.y = y;
@@ -84,6 +80,7 @@ class Player {
     }
 
     drawCtrls(ctx) {
+        //505 => ?? 50 10 50 10 50 ??
         //w=50, gap=10
         //167.5=(V_BORDER/2-w*3-gap*2)/2
         ctx.font = '24px serif';
