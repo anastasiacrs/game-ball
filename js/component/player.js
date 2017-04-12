@@ -157,10 +157,12 @@ class Player {
     }
 
     leftPressed() {
+        this.hideCtrls();
         this.vx = -PLAYER_H_VELOCITY;
     }
 
     rightPressed() {
+        this.hideCtrls();
         this.vx = PLAYER_H_VELOCITY;
     }
 
