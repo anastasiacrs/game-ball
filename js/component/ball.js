@@ -20,15 +20,10 @@ class Ball {
     }
 
     draw() {
-        //todo: static??
-        Ball.circle(this.ctx, this.x, this.y, this.r);
-    }
-
-    static circle(context, x, y, r) {
-        context.beginPath();
-        context.arc(x, y, r, 0, 2 * Math.PI, false);
-        context.fillStyle = BALL_COLOR;
-        context.fill();
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+        this.ctx.fillStyle = BALL_COLOR;
+        this.ctx.fill();
     }
 
     currentVelocity() {

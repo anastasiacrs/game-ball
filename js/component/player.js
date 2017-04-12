@@ -6,34 +6,24 @@ class Player {
         this.x = x;
         this.y = y;
         this.r = r;
-
         this.xLeft=xLeft;
         this.xRight=xRight;
-
         this.color=color;
-        
         this.vx = 0;
         this.vy = 0;
         this.v = 0;
         this.y0 = y;
         this.t0 = 0;
-
         this.side=side;
-
         this.ctrl = {
             left: _left,
             right: _right,
             up: _up
         }
-
-        this.bindKeys();
-
         this.isCtrls=true;
-
         this.score=0;
-
-
         this.sign=this.side=='left'?1:-1;
+        this.bindKeys();
     }
 
     win(){
@@ -174,16 +164,9 @@ class Player {
         this.vx = 0;
     }
 
-
     bindKeys() {
-        // keyboardJS.bind(this.ctrl.left, this.left.bind(this));
-        // keyboardJS.bind(this.ctrl.right, this.right.bind(this));
-
         keyboardJS.bind(this.ctrl.left, this.leftPressed.bind(this), this.released.bind(this));
         keyboardJS.bind(this.ctrl.right, this.rightPressed.bind(this), this.released.bind(this));
-
         keyboardJS.bind(this.ctrl.up, this.jump.bind(this));
     }
-
-
 }
