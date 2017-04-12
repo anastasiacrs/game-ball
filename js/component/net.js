@@ -1,13 +1,13 @@
 class Net {
 
     constructor(context, x, height, width, color) {
-        this.ctx=context;
+        this.ctx = context;
         this.x = x;
         this.height = height;
         this.width = width;
         this.color = color;
 
-        this.top = {x: x, y: H_BORDER - this.height, r: NET_RADIUS };
+        this.top = {x: x, y: H_BORDER - this.height, r: NET_RADIUS};
         this.left = x - NET_RADIUS;
         this.right = x + NET_RADIUS;
     }

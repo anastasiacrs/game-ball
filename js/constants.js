@@ -1,4 +1,3 @@
-
 const G = 9.8;
 const TIME_SCALE = 100;
 const REPEAT_INTERVAL = 1; //Milliseconds
@@ -27,9 +26,9 @@ const BALL_START_Y = 350;
 const BALL_START_V = 50;
 const BALL_RADIUS = 20;
 const BALL_COLLISION_DELTA = 10;
-const BALL_COLOR='#FFC814';
+const BALL_COLOR = '#FFC814';
 
-const FLOOR_HEIGHT=20;
+const FLOOR_HEIGHT = 20;
 
-const WIN_SCORE=5;
+const WIN_SCORE = 5;
 

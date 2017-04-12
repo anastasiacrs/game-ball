@@ -1,7 +1,7 @@
 class Ball {
 
     constructor(context, x, y, r, velocity, moving) {
-        this.ctx=context;
+        this.ctx = context;
         this.x = x;
         this.y = y;
         this.r = r;
@@ -48,11 +48,10 @@ class Ball {
     }
 
     horizontalWallBounce(angle) {
-        console.log('horizontalWallBounce '+this.x);
         if (Math.sin(angle) < 0) {
             this.moving = false;
-            var winner = this.x < V_BORDER / 2 ? 'right':'left';
-            var event = new CustomEvent("win", {'detail': {'winner':winner}});
+            var winner = this.x < V_BORDER / 2 ? 'right' : 'left';
+            var event = new CustomEvent("win", {'detail': {'winner': winner}});
             this.ctx.canvas.dispatchEvent(event);
         }
 
@@ -112,7 +111,6 @@ class Ball {
             this.y0 = this.y;
 
             this.velocity.a = angle + Math.PI / 2;
-            console.log(`a=${ (angle + Math.PI / 2) * 180 / Math.PI}, new=${2 * Math.PI - this.currentAngle() + 2 * Math.atan(angle)}`)
 
             this.moving = true;
         }
@@ -166,9 +164,9 @@ class Ball {
     }
 
     move() {
-        if (!this.moving) 
+        if (!this.moving)
             return;
-        
+
         let v0 = this.velocity.v;
         let alpha = this.velocity.a;
 
