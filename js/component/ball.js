@@ -48,18 +48,18 @@ class Ball {
     }
 
     horizontalWallBounce(angle) {
-        if (Math.sin(angle) < 0) {
+        if (Math.sin(angle) < 0 && this.moving) {
             this.moving = false;
-            var winner = this.x < V_BORDER / 2 ? 'right' : 'left';
+            var winner = this.x < NET_X ? 'right' : 'left';
             var event = new CustomEvent("win", {'detail': {'winner': winner}});
-            this.ctx.canvas.dispatchEvent(event);
+            this.ctx.canvas.dispatchEvent(event)
+        } else {
+            this.velocity.v = this.currentVelocity();
+            this.velocity.a = 2 * Math.PI - angle;
+            this.t0 = Date.now();
+            this.x0 = this.x;
+            this.y0 = this.y;
         }
-
-        this.velocity.v = this.currentVelocity();
-        this.velocity.a = 2 * Math.PI - angle;
-        this.t0 = Date.now();
-        this.x0 = this.x;
-        this.y0 = this.y;
     }
 
     verticalWallBounce(angle) {
@@ -74,8 +74,7 @@ class Ball {
         if (this.y <= player.y) {
             this.ballBounce(player);
         } else {
-            let deltaR = this.r - (this.y - player.y) + BALL_COLLISION_DELTA;
-            this.y += deltaR;
+            this.y += this.r - (this.y - player.y) + BALL_COLLISION_DELTA;
 
             this.bounce(0);
         }
@@ -85,7 +84,7 @@ class Ball {
         if (side == 'left' || side == 'right') {
             this.x = this.x < net.x ? net.x - net.width / 2 - this.r : net.x + net.width / 2 + this.r;
 
-            this.verticalWallBounce(ball.currentAngle());
+            this.verticalWallBounce(this.currentAngle());
         } else if (side == 'top') {
             this.ballBounce(net.top);
         }
