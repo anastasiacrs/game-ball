@@ -1,3 +1,5 @@
+const CONST = require('./../const.js');
+
 class Player {
 
     constructor(context, x, y, r, _left, _right, _up, xLeft, xRight, color, side) {
@@ -28,7 +30,7 @@ class Player {
 
     win() {
         this.score++;
-        if (this.score >= WIN_SCORE) {
+        if (this.score >= CONST.WIN_SCORE) {
             var event = new CustomEvent("gameover", {'detail': {'winner': this.side}});
             this.ctx.canvas.dispatchEvent(event);
         }
@@ -65,7 +67,7 @@ class Player {
         this.ctx.font = '128px serif';
         this.ctx.fillStyle = this.color;
         this.ctx.textAlign = "center";
-        let x = this.side == 'left' ? 0 : V_BORDER;
+        let x = this.side == 'left' ? 0 : CONST.V_BORDER;
         this.ctx.fillText(this.score, x + this.sign * 100, 150);
     }
 
@@ -80,37 +82,37 @@ class Player {
         this.ctx.lineWidth = 1;
         this.ctx.strokeStyle = this.color;
 
-        let x = this.side == 'left' ? 0 : V_BORDER;
+        let x = this.side == 'left' ? 0 : CONST.V_BORDER;
 
         this.ctx.beginPath();
-        this.ctx.moveTo(x + this.sign * 167.5, H_BORDER - 150);
-        this.ctx.lineTo(x + this.sign * (167.5 + 50), H_BORDER - 150);
-        this.ctx.lineTo(x + this.sign * (167.5 + 50), H_BORDER - (150 + 50));
-        this.ctx.lineTo(x + this.sign * 167.5, H_BORDER - (150 + 50));
+        this.ctx.moveTo(x + this.sign * 167.5, CONST.H_BORDER - 150);
+        this.ctx.lineTo(x + this.sign * (167.5 + 50), CONST.H_BORDER - 150);
+        this.ctx.lineTo(x + this.sign * (167.5 + 50), CONST.H_BORDER - (150 + 50));
+        this.ctx.lineTo(x + this.sign * 167.5, CONST.H_BORDER - (150 + 50));
         this.ctx.closePath();
         this.ctx.stroke();
 
-        this.ctx.strokeText(this.ctrl.left, x + this.sign * (167.5 + 50 / 2), H_BORDER - (150 + 50 / 2 - 24 / 4));
+        this.ctx.strokeText(this.ctrl.left, x + this.sign * (167.5 + 50 / 2), CONST.H_BORDER - (150 + 50 / 2 - 24 / 4));
 
         this.ctx.beginPath();
-        this.ctx.moveTo(x + this.sign * (167.5 + 120), H_BORDER - 150);
-        this.ctx.lineTo(x + this.sign * (167.5 + 50 + 120), H_BORDER - 150);
-        this.ctx.lineTo(x + this.sign * (167.5 + 50 + 120), H_BORDER - (150 + 50));
-        this.ctx.lineTo(x + this.sign * (167.5 + 120), H_BORDER - (150 + 50));
+        this.ctx.moveTo(x + this.sign * (167.5 + 120), CONST.H_BORDER - 150);
+        this.ctx.lineTo(x + this.sign * (167.5 + 50 + 120), CONST.H_BORDER - 150);
+        this.ctx.lineTo(x + this.sign * (167.5 + 50 + 120), CONST.H_BORDER - (150 + 50));
+        this.ctx.lineTo(x + this.sign * (167.5 + 120), CONST.H_BORDER - (150 + 50));
         this.ctx.closePath();
         this.ctx.stroke();
 
-        this.ctx.strokeText(this.ctrl.right, x + this.sign * (167.5 + 120 + 50 / 2), H_BORDER - (150 + 50 / 2 - 24 / 4));
+        this.ctx.strokeText(this.ctrl.right, x + this.sign * (167.5 + 120 + 50 / 2), CONST.H_BORDER - (150 + 50 / 2 - 24 / 4));
 
         this.ctx.beginPath();
-        this.ctx.moveTo(x + this.sign * (167.5 + 60), H_BORDER - (150 + 60));
-        this.ctx.lineTo(x + this.sign * (167.5 + 50 + 60), H_BORDER - (150 + 60));
-        this.ctx.lineTo(x + this.sign * (167.5 + 50 + 60), H_BORDER - (150 + 60 + 50));
-        this.ctx.lineTo(x + this.sign * (167.5 + 60), H_BORDER - (150 + 60 + 50));
+        this.ctx.moveTo(x + this.sign * (167.5 + 60), CONST.H_BORDER - (150 + 60));
+        this.ctx.lineTo(x + this.sign * (167.5 + 50 + 60), CONST.H_BORDER - (150 + 60));
+        this.ctx.lineTo(x + this.sign * (167.5 + 50 + 60), CONST.H_BORDER - (150 + 60 + 50));
+        this.ctx.lineTo(x + this.sign * (167.5 + 60), CONST.H_BORDER - (150 + 60 + 50));
         this.ctx.closePath();
         this.ctx.stroke();
 
-        this.ctx.strokeText(this.ctrl.up, x + this.sign * (167.5 + 60 + 50 / 2), H_BORDER - (150 + 60 + 50 / 2 - 24 / 4));
+        this.ctx.strokeText(this.ctrl.up, x + this.sign * (167.5 + 60 + 50 / 2), CONST.H_BORDER - (150 + 60 + 50 / 2 - 24 / 4));
     }
 
 
@@ -120,14 +122,14 @@ class Player {
 
         this.t0 = Date.now();
 
-        this.vy = PLAYER_JUMP_VELOCITY
+        this.vy = CONST.PLAYER_JUMP_VELOCITY
     }
 
     move() {
-        let t = (Date.now() - this.t0) / TIME_SCALE;
+        let t = (Date.now() - this.t0) / CONST.TIME_SCALE;
 
         this.x += this.vx;
-        this.y = this.y0 - (this.vy > 0 ? (this.vy * t - 0.5 * G * Math.pow(t, 2)) : 0);
+        this.y = this.y0 - (this.vy > 0 ? (this.vy * t - 0.5 * CONST.G * Math.pow(t, 2)) : 0);
 
         if (this.x - this.r < this.xLeft) this.x = this.xLeft + this.r;
         if (this.x + this.r > this.xRight) this.x = this.xRight - this.r;
@@ -144,7 +146,7 @@ class Player {
             this.x = this.xLeft + this.r;
             return;
         }
-        this.x -= PLAYER_STEP;
+        this.x -= CONST.PLAYER_STEP;
     }
 
     right() {
@@ -153,17 +155,17 @@ class Player {
             this.x = this.xRight - this.r;
             return;
         }
-        this.x += PLAYER_STEP;
+        this.x += CONST.PLAYER_STEP;
     }
 
     leftPressed() {
         this.hideCtrls();
-        this.vx = -PLAYER_H_VELOCITY;
+        this.vx = -CONST.PLAYER_H_VELOCITY;
     }
 
     rightPressed() {
         this.hideCtrls();
-        this.vx = PLAYER_H_VELOCITY;
+        this.vx = CONST.PLAYER_H_VELOCITY;
     }
 
     released() {
@@ -176,3 +178,5 @@ class Player {
         keyboardJS.bind(this.ctrl.up, this.jump.bind(this));
     }
 }
+
+module.exports = Player;

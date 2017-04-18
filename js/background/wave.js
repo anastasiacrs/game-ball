@@ -1,3 +1,7 @@
+const CONST = require('./../const.js');
+
+let Point = require('./point.js');
+
 class Wave {
 
     constructor(ctx, opt) {
@@ -34,8 +38,8 @@ class Wave {
             let d = (this.points[i].y + this.points[i + 1].y) / 2;
             ctx.quadraticCurveTo(this.points[i].x, this.points[i].y, c, d);
         }
-        ctx.lineTo(-this.opt.range.x - this.opt.thickness, H_BORDER + this.opt.thickness);
-        ctx.lineTo(V_BORDER + this.opt.range.x + this.opt.thickness, H_BORDER + this.opt.thickness);
+        ctx.lineTo(-this.opt.range.x - this.opt.thickness, CONST.H_BORDER + this.opt.thickness);
+        ctx.lineTo(CONST.V_BORDER + this.opt.range.x + this.opt.thickness, CONST.H_BORDER + this.opt.thickness);
         ctx.closePath();
         ctx.fillStyle = 'hsl(' + this.opt.color_hsl + ', 70%, 95%)';
         ctx.fill();
@@ -45,12 +49,14 @@ class Wave {
     init() {
         this.points = [];
         let i = this.opt.count + 2;
-        let spacing = (V_BORDER + (this.opt.range.x * 2)) / (this.opt.count - 1);
+        let spacing = (CONST.V_BORDER + (this.opt.range.x * 2)) / (this.opt.count - 1);
         while (i--) {
             this.points.push(new Point({
                 x: (spacing * (i - 1)) - this.opt.range.x,
-                y: H_BORDER - (H_BORDER * this.opt.level)
+                y: CONST.H_BORDER - (CONST.H_BORDER * this.opt.level)
             }, this.opt));
         }
     }
 }
+
+module.exports = Wave;

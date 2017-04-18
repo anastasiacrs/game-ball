@@ -5,3 +5,5 @@ class Vector {
         this.a = angle * (Math.PI / 180);
     }
 }
+
+module.exports = Vector;

@@ -1,4 +1,5 @@
-const opt1 = {
+module.exports = Object.freeze({
+    opt1 : {
     count: 7,
     range: {
         x: 20,
@@ -14,9 +15,7 @@ const opt1 = {
     curved: true,
     color_hsl: 180,
     color: '#F4F6FE'
-};
-
-const opt2 = {
+}, opt2 :{
     count: 7,
     range: {
         x: 20,
@@ -32,9 +31,7 @@ const opt2 = {
     curved: true,
     color_hsl: 210,
     color: '#F9FAFF'
-};
-
-const opt3 = {
+}, opt3 :{
     count: 7,
     range: {
         x: 20,
@@ -50,4 +47,6 @@ const opt3 = {
     curved: true,
     color_hsl: 240,
     color: '#FDFEFF'
-};
+}
+});
+

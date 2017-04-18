@@ -1,3 +1,7 @@
+let Vector = require('./vector.js');
+
+const CONST = require('./../const.js');
+
 class Ball {
 
     constructor(context, x, y, r, velocity, moving) {
@@ -14,15 +18,15 @@ class Ball {
     }
 
     restart(side) {
-        this.x = side == 'left' ? BALL_START_X : V_BORDER - BALL_START_X;
-        this.y = BALL_START_Y;
-        this.velocity = new Vector(BALL_START_V, 0);
+        this.x = side == 'left' ? CONST.BALL_START_X : CONST.V_BORDER - CONST.BALL_START_X;
+        this.y = CONST.BALL_START_Y;
+        this.velocity = new Vector(CONST.BALL_START_V, 0);
     }
 
     draw() {
         this.ctx.beginPath();
         this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
-        this.ctx.fillStyle = BALL_COLOR;
+        this.ctx.fillStyle = CONST.BALL_COLOR;
         this.ctx.fill();
     }
 
@@ -31,7 +35,7 @@ class Ball {
         let t = (Date.now() - this.t0) / 100;
         let alpha = this.velocity.a;
 
-        return Math.sqrt(Math.pow(v0, 2) - 2 * v0 * G * t * Math.sin(alpha) + Math.pow(G * t, 2));
+        return Math.sqrt(Math.pow(v0, 2) - 2 * v0 * CONST.G * t * Math.sin(alpha) + Math.pow(CONST.G * t, 2));
     }
 
     currentAngle() {
@@ -39,7 +43,7 @@ class Ball {
         let t = (Date.now() - this.t0) / 100;
         let alpha = this.velocity.a;
 
-        let angle = Math.atan((v0 * Math.sin(alpha) - G * t) / (v0 * Math.cos(alpha)));
+        let angle = Math.atan((v0 * Math.sin(alpha) - CONST.G * t) / (v0 * Math.cos(alpha)));
         if (Math.cos(alpha) < 0) {
             angle += Math.PI;
         }
@@ -50,7 +54,7 @@ class Ball {
     horizontalWallBounce(angle) {
         if (Math.sin(angle) < 0) {
             this.moving = false;
-            var winner = this.x < V_BORDER / 2 ? 'right' : 'left';
+            var winner = this.x < CONST.V_BORDER / 2 ? 'right' : 'left';
             var event = new CustomEvent("win", {'detail': {'winner': winner}});
             this.ctx.canvas.dispatchEvent(event);
         }
@@ -74,7 +78,7 @@ class Ball {
         if (this.y <= player.y) {
             this.ballBounce(player);
         } else {
-            let deltaR = this.r - (this.y - player.y) + BALL_COLLISION_DELTA;
+            let deltaR = this.r - (this.y - player.y) + CONST.BALL_COLLISION_DELTA;
             this.y += deltaR;
 
             this.bounce(0);
@@ -97,9 +101,9 @@ class Ball {
 
         k = k < 0 ? k + Math.PI : k;
 
-        let deltaR = ball.r + this.r - this.distanceTo(ball) + BALL_COLLISION_DELTA;
+        let deltaR = ball.r + this.r - this.distanceTo(ball) + CONST.BALL_COLLISION_DELTA;
         this.x += deltaR * Math.cos(k);
-        this.y += V_DIRECTION * deltaR * Math.sin(k);
+        this.y += CONST.V_DIRECTION * deltaR * Math.sin(k);
 
         this.bounce(normal);
     }
@@ -133,17 +137,17 @@ class Ball {
 
     collidesWithNet(net) {
         let direction = Math.sign(Math.cos(this.currentAngle()));
-        let horizontalDistance = (H_BORDER - NET_HEIGHT - NET_RADIUS) - (this.y + this.r);
+        let horizontalDistance = (CONST.H_BORDER - CONST.NET_HEIGHT - CONST.NET_RADIUS) - (this.y + this.r);
 
-        let up = H_BORDER - NET_HEIGHT;
+        let up = CONST.H_BORDER - CONST.NET_HEIGHT;
 
         if (horizontalDistance > 0)
             return;
 
         if (this.y > up) {
-            if (this.x < NET_X && direction > 0 && this.x + this.r > net.left) {
+            if (this.x < CONST.NET_X && direction > 0 && this.x + this.r > net.left) {
                 return 'left';
-            } else if (this.x > NET_X && direction < 0 && this.x - this.r < net.right) {
+            } else if (this.x > CONST.NET_X && direction < 0 && this.x - this.r < net.right) {
                 return 'right';
             }
         } else if (this.collides(net.top)) {
@@ -173,22 +177,24 @@ class Ball {
         let t = (Date.now() - this.t0) / 100;
 
         this.x = this.x0 + v0 * t * Math.cos(alpha);
-        this.y = this.y0 + V_DIRECTION * (v0 * t * Math.sin(alpha) - 0.5 * G * Math.pow(t, 2));
+        this.y = this.y0 + CONST.V_DIRECTION * (v0 * t * Math.sin(alpha) - 0.5 * CONST.G * Math.pow(t, 2));
 
-        let angle = Math.atan((v0 * Math.sin(alpha) - G * t) / (v0 * Math.cos(alpha)));
+        let angle = Math.atan((v0 * Math.sin(alpha) - CONST.G * t) / (v0 * Math.cos(alpha)));
         if (Math.cos(alpha) < 0) {
             angle += Math.PI;
         }
 
-        if ((this.x + this.r >= V_BORDER && Math.cos(alpha) > 0)
+        if ((this.x + this.r >= CONST.V_BORDER && Math.cos(alpha) > 0)
             || (this.x - this.r <= 0 && Math.cos(alpha) < 0)) {
 
             this.verticalWallBounce(angle);
 
-        } else if ((this.y - this.r <= 0 && V_DIRECTION * Math.sin(angle) < 0) || (
-            this.y + this.r >= H_BORDER - FLOOR_HEIGHT && V_DIRECTION * Math.sin(angle) > 0)) {
+        } else if ((this.y - this.r <= 0 && CONST.V_DIRECTION * Math.sin(angle) < 0) || (
+            this.y + this.r >= CONST.H_BORDER - CONST.FLOOR_HEIGHT && CONST.V_DIRECTION * Math.sin(angle) > 0)) {
 
             this.horizontalWallBounce(angle)
         }
     }
 }
+
+module.exports = Ball;
